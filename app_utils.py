@@ -23,6 +23,6 @@ def insert_random_string_to_filename(filename, random_string):
     Returns:
         str: _description_
     """    
-    file_name, file_extension = filename.split('.')
+    file_name, file_extension = filename.rsplit('.', 1)
     #random_string = generate_random_string()
     return f"{file_name}-nex{random_string}.{file_extension}"
