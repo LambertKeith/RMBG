@@ -44,11 +44,11 @@ async def rmbg(file: UploadFile = File(...)):
         with open(file_path, "wb") as buffer:
             buffer.write(await file.read())
 
-        # Load pre-trained model
-        net = BriaRMBG.from_pretrained("briaai/RMBG-1.4")
+        net = BriaRMBG()
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        net = BriaRMBG.from_pretrained("briaai/RMBG-1.4")
         net.to(device)
-        net.eval()
+        net.eval()  
 
         # Prepare input
         model_input_size = [1024,1024]
@@ -73,6 +73,7 @@ async def rmbg(file: UploadFile = File(...)):
         # Return the result file
         return FileResponse(result_file_path, media_type="image/png")
     except Exception as e:
+        import traceback; traceback.print_exc();
         raise HTTPException(status_code=500, detail=str(e))
 
 
